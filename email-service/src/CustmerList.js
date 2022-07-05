@@ -1,21 +1,23 @@
 import React from "react"
-import { useState, useEffect } from "react"
-import axios from 'axios'
+import { useState, useEffect, useRef } from "react"
 import './App.css'
 import  {firestore} from './utils/firebase';
-import { collection, addDoc, onSnapshot, deleteDoc, doc, where, query, updateDoc, setDoc} from "firebase/firestore"; 
+import { collection, addDoc, onSnapshot, deleteDoc, where, query } from "firebase/firestore"; 
+import Form from 'react-bootstrap/Form';
+
 
 
 
 export default function App() {
-    const [employees, setEmployees] = React.useState([])
     const [notesFromDb, setNotesFromDb] = useState([])
 
-    React.useEffect(() => {
+
+    useEffect(() => {
         getData()
+
     }, [])
     
-    const getData = async () => {
+    const getData = () => {
         const collectionRef = collection(firestore,"email-service")
         const queryParams = where('uid', '==', user.uid)
         const notesQuery = query(collectionRef, queryParams)
@@ -24,6 +26,7 @@ export default function App() {
         setNotesFromDb(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id  })));
         })
     }
+
     const [user, setUser] = useState({
         firstName: '',
         lastName: '',
@@ -33,29 +36,35 @@ export default function App() {
 
     })
 
-
+    let listOfEmails = []
+    const emailList = (event) => {
+        if (event.target.id) {
+            listOfEmails.push(event.target.value)
+        }
+            
+    }
 
     const removeData = (id) => {
 
-        axios.delete(`${URL}/${id}`).then(res => {
-            const del = employees.filter(employee => id !== employee.id)
-            setEmployees(del)
-        })
+        // axios.delete(`${URL}/${id}`).then(res => {
+        //     const del = employees.filter(employee => id !== employee.id)
+        //     setEmployees(del)
+        // })
     }
 
     const renderHeader = () => {
-        let headerElement = ['id', 'first name','Last Name', 'email', 'phone', 'operation']
-
+        const headerElement = ['id', 'first name','Last Name', 'email', 'phone', 'operation']
         return headerElement.map((key, index) => {
             return <th key={index}>{key.toUpperCase()}</th>
         })
     }
 
+    let countedId = 1
     const renderBody = () => {
         return notesFromDb.map(({ id, firstName, lastName, email, phoneNumber }) => {
             return (
                 <tr key={id}>
-                    <td>{id}</td>
+                    <td className="flex flex-row-1"><Form.Check type="checkbox" value={email} id={countedId} onClick={emailList} className="mr-3"/>{countedId++}</td>
                     <td>{firstName}</td>
                     <td>{lastName}</td>
                     <td>{email}</td>
@@ -66,22 +75,24 @@ export default function App() {
                     </td>
                 </tr>
             )
+            
         })
+        
     }
 
-  return (
-    <div>
-            
-        <table id='employee'>
-            <thead>
-                <tr>{renderHeader()}</tr>
-            </thead>
-            <tbody>
-                {renderBody()}
-            </tbody>
-        </table>
-    </div>
-  )
+    return (
+        <div>
+                
+            <table id='employee'>
+                <thead>
+                    <tr>{renderHeader()}</tr>
+                </thead>
+                <tbody>
+                    {renderBody()}
+                </tbody>
+            </table>
+        </div>
+    )
 }
 
 
