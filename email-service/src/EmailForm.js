@@ -1,12 +1,13 @@
 import React from 'react'
 import './App.css'
 import { Form, Button } from 'react-bootstrap';
-import AddNewUser from './AddNewUser.js'
 
 
 
 
 export default function EmailForm() {
+
+
   return (
     
     <div className='emailDiv'>
@@ -23,11 +24,11 @@ export default function EmailForm() {
                 <Form.Label>Upload</Form.Label>
                 <Form.Control type="file" />
             </Form.Group>
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
-
         </Form>
+        <Button variant="primary" type="submit">
+            Send
+        </Button>
+
           
 
     </div>
