@@ -29,7 +29,6 @@ export default function EmailForm() {
 
         </Form>
           
-        < AddNewUser />
 
     </div>
     
