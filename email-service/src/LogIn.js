@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function logIn() {
+export default function LogIn() {
   return (
     <div>
           <form method="get" action="javascript: void(0);" id="login-form" class="login-form" autocomplete="off" role="main">

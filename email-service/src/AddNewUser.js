@@ -13,6 +13,7 @@ export default function AddNewUser() {
     const [email, setEmail] = useState('');
     const [phoneNumber, setphoneNumber] = useState('');
 
+
     const [buttonLoading, setButtonLoading] = useState(false);
     const [notesFromDb, setNotesFromDb] = useState([])
 
@@ -115,27 +116,29 @@ export default function AddNewUser() {
 
 
 
-  return (
-    <div>
-
+    return (
+    
+    <div className='border-2 border-solid border-gray-500  p-10 border-opacity-25 bg-slate-300'>
+       
         <Form >
-            <Form.Group className="mb-3" >
-                <Form.Control type="text"  placeholder="First Name" value={firstName} id={firstName} onChange={ firstNameSet }/>
+                <p className='flex justify-center'>Add User</p>
+        <Form.Group className="mb-3" >
+            <Form.Control type="text"  placeholder="First Name" value={firstName} id={firstName} onChange={ firstNameSet }/>
+        </Form.Group>
+        <Form.Group className="mb-3" >
+            <Form.Control type="text" placeholder="Last Name" value={lastName} id={lastName} onChange={ lastNameSet } />
+        </Form.Group>
+        <Form.Group className="mb-3" >
+            <Form.Control type="email" placeholder="Enter email" value={email} id='email'onChange={ emailSet } />
             </Form.Group>
-            <Form.Group className="mb-3" >
-                <Form.Control type="text" placeholder="Last Name" value={lastName} id={lastName} onChange={ lastNameSet } />
-            </Form.Group>
-            <Form.Group className="mb-3" >
-                <Form.Control type="email" placeholder="Enter email" value={email} id='email'onChange={ emailSet } />
-              </Form.Group>
-            <Form.Group className="mb-3" >
-                <Form.Control type="text" placeholder="Phone #" value={phoneNumber} id='phoneNumber'onChange={ phoneNumberSet } />
-            </Form.Group>
-            
-          </Form>
-            <Button variant="primary" type="submit" onClick={ onClickHandler } id='submit'>
-                Submit
-            </Button>
+        <Form.Group className="mb-3" >
+            <Form.Control type="text" placeholder="Phone #" value={phoneNumber} id='phoneNumber'onChange={ phoneNumberSet } />
+        </Form.Group>
+        
+        </Form>
+        <Button variant="primary" type="submit" onClick={ onClickHandler } id='submit'>
+            Submit
+        </Button>
 
   
 

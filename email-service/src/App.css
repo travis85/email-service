@@ -17,6 +17,7 @@ body {
 #employee {
   border-collapse: collapse;
   border: 3px solid #ddd;
+  margin-top: 100px;
 }
 
 #employee td,
@@ -53,18 +54,6 @@ body {
   background-color: transparent;
 }
 
-.update {
-  border: none;
-  outline: none;
-  font-size: 11px;
-  font-family: "Quicksand", sans-serif;
-  color: blue;
-  padding: 3px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  border: 1px solid blue;
-  background-color: transparent;
-}
 
 .button:active {
   border: 1px solid blue;
@@ -74,4 +63,17 @@ body {
 
 .emailDiv{
   margin: 25px 50px 75px 100px;
+  margin-top: 100px;
+}
+.emailDiv button{
+  margin-top: 10px;
+}
+
+.addUserDiv{
+  margin: 25px 50px 75px 100px; 
+
+}
+.addUserDiv button{
+ margin-top: 10px;
+  
 }

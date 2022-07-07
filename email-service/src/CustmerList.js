@@ -2,19 +2,20 @@ import React from "react"
 import { useState, useEffect, useRef } from "react"
 import './App.css'
 import  {firestore} from './utils/firebase';
-import { collection, addDoc, onSnapshot, deleteDoc, where, query } from "firebase/firestore"; 
+import { collection, onSnapshot, deleteDoc, where, query, doc } from "firebase/firestore"; 
 import Form from 'react-bootstrap/Form';
+
 
 
 
 
 export default function App() {
     const [notesFromDb, setNotesFromDb] = useState([])
-
+    // const [check, setCheck] = useState(false);
 
     useEffect(() => {
         getData()
-
+        
     }, [])
     
     const getData = () => {
@@ -37,25 +38,24 @@ export default function App() {
     })
 
     let listOfEmails = []
-    const emailList = (event) => {
+    const emailList = (event) => { // check to see if arr contains id
         if (event.target.id) {
+            // setCheck(prevCheck => !prevCheck);
             listOfEmails.push(event.target.value)
-        }
-            
+        } 
+        
+        console.log(listOfEmails)
     }
 
-    const removeData = (id) => {
-
-        // axios.delete(`${URL}/${id}`).then(res => {
-        //     const del = employees.filter(employee => id !== employee.id)
-        //     setEmployees(del)
-        // })
+    const handleDelete = async(id) => {
+        const docRef = doc(firestore, "email-service",id);
+        await deleteDoc(docRef)
     }
 
     const renderHeader = () => {
-        const headerElement = ['id', 'first name','Last Name', 'email', 'phone', 'operation']
+        const headerElement = ['id', 'first name','Last Name', 'email', 'phone', 'Delete']
         return headerElement.map((key, index) => {
-            return <th key={index}>{key.toUpperCase()}</th>
+            return <th key={index}> {key.toUpperCase()} </th>
         })
     }
 
@@ -63,15 +63,14 @@ export default function App() {
     const renderBody = () => {
         return notesFromDb.map(({ id, firstName, lastName, email, phoneNumber }) => {
             return (
-                <tr key={id}>
-                    <td className="flex flex-row-1"><Form.Check type="checkbox" value={email} id={countedId} onClick={emailList} className="mr-3"/>{countedId++}</td>
+                <tr key={id} >
+                    <td className=""><Form.Check type="checkbox" value={email} id={countedId} onClick={emailList} className="mr-3"/>{countedId++}</td>
                     <td>{firstName}</td>
                     <td>{lastName}</td>
                     <td>{email}</td>
                     <td>{phoneNumber}</td>
                     <td className='opration'>
-                        <button className='delete' onClick={() => removeData(id)}>Delete</button>
-                        <button className='update' onClick={() => removeData(id)}>Update</button>
+                        <button className='delete' onClick={() => handleDelete(id)}>X</button>
                     </td>
                 </tr>
             )
@@ -81,6 +80,7 @@ export default function App() {
     }
 
     return (
+        <>
         <div>
                 
             <table id='employee'>
@@ -92,6 +92,8 @@ export default function App() {
                 </tbody>
             </table>
         </div>
+
+        </>
     )
 }
 
